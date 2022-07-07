@@ -43,6 +43,14 @@ import axios from 'axios'
 
 export default {
   name: 'IndexPage',
+
+  middleware({ store, redirect }) {
+    // ユーザーが認証されていない場合
+    if (!store.getters.idToken) {
+      return redirect('myLogin')
+    }
+  },
+
   data() {
     return {
       name: '',
@@ -50,6 +58,7 @@ export default {
       posts: [],
     }
   },
+
   computed: {
     idToken() {
       return this.$store.getters.idToken
@@ -62,15 +71,15 @@ export default {
         'https://firestore.googleapis.com/v1/projects/fir-pj3-26803/databases/(default)/documents/comments',
         {
           headers: {
-            Authorization: `Bearer ${this.idToken}`
-          }
+            Authorization: `Bearer ${this.idToken}`,
+          },
         }
       )
       .then((response) => {
         this.posts = response.data.documents
       })
   },
-  
+
   methods: {
     createComment() {
       axios.post(
@@ -87,8 +96,8 @@ export default {
         },
         {
           headers: {
-            Authorization: `Bearer ${this.idToken}`
-          }
+            Authorization: `Bearer ${this.idToken}`,
+          },
         }
       )
 

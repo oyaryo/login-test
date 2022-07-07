@@ -31,6 +31,7 @@ export const actions = {
       )
       .then((response) => {
         commit('updateIdToken', response.data.idToken)
+        this.$router.push('/')
       })
   },
   register({ commit }, authData) {
@@ -45,6 +46,7 @@ export const actions = {
       )
       .then((response) => {
         commit('updateIdToken', response.data.idToken)
+        this.$router.push('/')
       })
   },
 }
